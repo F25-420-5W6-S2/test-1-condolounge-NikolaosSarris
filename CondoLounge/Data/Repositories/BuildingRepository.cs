@@ -9,9 +9,11 @@ namespace CondoLounge.Data.Repositories
         {
         }
 
-        public IEnumerable<Building> GetAllUsersForBuilding(int buidlingId)
+        public IEnumerable<ApplicationUser> GetAllUsersForBuilding(int buildingId)
         {
-            throw new NotImplementedException();
+            return _context.Users
+                .Where(u => u.BuildingId == buildingId)
+                .ToList();
         }
     }
 }
