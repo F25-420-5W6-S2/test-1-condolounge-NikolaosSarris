@@ -9,7 +9,6 @@ namespace CondoLounge.Data
     {        
         public DbSet<ApplicationUser> Users {  get; set; }
         public DbSet<Building> Buildings { get; set; }
-
         public DbSet<Condo> Condos { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
@@ -21,18 +20,20 @@ namespace CondoLounge.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            //modelBuilder.Entity<ApplicationUser>()
-            //    .HasMany(b => b.Buildings)
-            //    .WithMany(c => c.Condos)
+            modelBuilder.Entity<ApplicationUser>()
+                .HasOne(b => b.Building)
+                .WithMany(c => c.Users)
+                .HasForeignKey(u => u.BuildingId);
 
-            //modelBuilder.Entity<Condo>()
-            //    .HasOne(c => c.User)
-            //    .WithMany(b => b.Buildings)
-            //    .HasForeignKey(c => c.UserId);
+            modelBuilder.Entity<Condo>()
+                .HasOne(u => u.User)
+                .WithMany(c => c.Condos)
+                .HasForeignKey(u => u.UserId);
 
-            //modelBuilder.Entity<Condo>()
-            //    .HasOne(c => c.User)
-            //    .WithMany()
+            modelBuilder.Entity<Condo>()
+                .HasOne(b => b.Building)
+                .WithMany(c => c.Condos)
+                .HasForeignKey(u => u.BuildingId);
         }
     }
 }
