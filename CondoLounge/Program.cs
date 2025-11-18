@@ -10,13 +10,29 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 
+// Repository and unit of work
 builder.Services.AddScoped<IRepositoryProvider, RepositoryProvider>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
+// Register Seeder
+builder.Services.AddScoped<CondoLoungeSeeder>();
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddRazorPages();
 
 var app = builder.Build();
+
+// Seed data on startup
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var dbContext = services.GetRequiredService<ApplicationDbContext>();
+    var seeder = services.GetRequiredService<CondoLoungeSeeder>();
+
+    dbContext.Database.Migrate();
+    await seeder.SeedAsync();
+}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
