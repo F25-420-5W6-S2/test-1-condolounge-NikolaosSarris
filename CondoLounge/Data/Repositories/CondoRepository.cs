@@ -11,7 +11,9 @@ namespace CondoLounge.Data.Repositories
 
         public IEnumerable<Condo> GetAllCondosForBuilding(int buildingId)
         {
-            throw new NotImplementedException();
+            return _dbSet
+                .Where(c => c.BuildingId == buildingId)
+                .ToList();
         }
     }
 }
