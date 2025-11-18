@@ -29,12 +29,22 @@
             </div>
             <div class="form-floating mb-3">
                 <input asp-for="Input.BuildingId" class="form-control" />
-                <label asp-for="Input.BuildingId">Club Code</label>
+                <label asp-for="Input.BuildingId">Building ID</label>
                 <span asp-validation-for="Input.BuildingId" class="text-danger"></span>
             </div>
             <div class="form-floating mb-3">
                 <input asp-for="Input.BuildingName" class="form-control" />
-                <label asp-for="Input.BuildingName">Club Name</label>
+                <label asp-for="Input.BuildingName">Building Name</label>
+                <span asp-validation-for="Input.BuildingName" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for="Input.CondoId" class="form-control" />
+                <label asp-for="Input.BuildingName">Condo ID</label>
+                <span asp-validation-for="Input.BuildingName" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for="Input.CondoNumber" class="form-control" />
+                <label asp-for="Input.BuildingName">Condo Name</label>
                 <span asp-validation-for="Input.BuildingName" class="text-danger"></span>
             </div>
             <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
