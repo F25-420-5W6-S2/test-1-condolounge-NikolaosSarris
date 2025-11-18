@@ -1,6 +1,6 @@
 ﻿namespace CondoLounge.Data.Interfaces
 {
-    public interface ICondoLoungeGenericRepository<T>
+    public interface ICondoLoungeGenericRepository<T> where T : class
     {
         IEnumerable<T> GetAll();
         T GetById(object id);
