@@ -21,6 +21,8 @@ namespace CondoLounge.Data
 
         public async Task SeedAsync()
         {
+            _db.Database.EnsureCreated();
+
             // Seed Roles
             if (!_roleManager.Roles.Any())
             {

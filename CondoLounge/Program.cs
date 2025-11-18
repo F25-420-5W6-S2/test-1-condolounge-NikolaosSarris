@@ -1,6 +1,8 @@
 using CondoLounge.Data;
 using CondoLounge.Data.Repositories.Helpers;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using CondoLounge.Data.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,12 +12,17 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 
+builder.Services.AddIdentity<ApplicationUser, IdentityRole<int>>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddDefaultUI()
+    .AddDefaultTokenProviders();
+
 // Repository and unit of work
 builder.Services.AddScoped<IRepositoryProvider, RepositoryProvider>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 // Register Seeder
-builder.Services.AddScoped<CondoLoungeSeeder>();
+builder.Services.AddTransient<CondoLoungeSeeder>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -54,6 +61,6 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-//app.MapRazorPages();
+app.MapRazorPages();
 
 app.Run();

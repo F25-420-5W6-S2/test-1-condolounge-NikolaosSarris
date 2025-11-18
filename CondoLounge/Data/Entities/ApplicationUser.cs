@@ -7,6 +7,7 @@ namespace CondoLounge.Data.Entities
         public int UserId { get; set; }
         public string Name { get; set; }
 
+        public int BuildingId { get; set; }
         public Building Building { get; set; }
         public ICollection<Condo> Condos { get; set; }
     }
